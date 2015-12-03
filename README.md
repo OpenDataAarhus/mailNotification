@@ -12,7 +12,7 @@ grant select on mailnotifikation to ckan_default;
 grant delete on mailnotifikation to ckan_default;
 
 Add this to CKAN configuration file.
-ckan.plugins = ... imailNotifikation
+ckan.plugins = ... mailNotifikation
 
 dk.aarhuskommune.odaa_url = postgresql://ckan_default:pass@localhost/odaa_default
 	Replace pass with the password, you created than you create the user ckan_default.
