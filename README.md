@@ -7,6 +7,7 @@ CREATE TABLE mailNotifikation (_guid VARCHAR PRIMARY KEY UNIQUE NOT NULL, _date 
 grant insert on mailnotifikation to ckan_default;
 grant update on mailnotifikation to ckan_default;
 grant select on mailnotifikation to ckan_default;
+grant delete on mailnotifikation to ckan_default;
 
 Add this to CKAN configuration file.
 ckan.plugins = ... imailNotifikation
@@ -15,4 +16,5 @@ dk.aarhuskommune.odaa_url = postgresql://ckan_default:pass@localhost/odaa_defaul
 	Replace pass with the password, you created than you create the user ckan_default.
 	
 dk.aarhuskommune.odaa_days = 30 (Days before the records in table mailNotifikation will be delete.)
+dk.aarhuskommune.odaa_from = from@email.com (From email.)
 

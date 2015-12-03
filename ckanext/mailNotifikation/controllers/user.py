@@ -82,7 +82,7 @@ class CustomUserController(UserController):
         c.execute(sql)
         rows=c.fetchall()   
         if len(rows)>0:
-            password=self._decode('ta122013?', rows[0][5])
+            password=self._decode(result["password"], rows[0][5])
             data_dict={'name': rows[0][2], 'email': rows[0][4], 'fullname': rows[0][3],'password1':password,'password2':password}
             sql="UPDATE mailnotifikation SET registered='True' WHERE _guid='%s';" % request.params.get('guid', 'Not present').encode('utf-8')
     	    c.execute(sql)
@@ -90,7 +90,7 @@ class CustomUserController(UserController):
             conn.close()
             self._save_new(context,data_dict)            
 
-    def send_mail(self,to,subject, _body):                 
+    def send_mail(self,to,subject, _body):              
         body = _body.replace('\n', '\r\n')
         guid=str(uuid.uuid4())
         body = config.get('ckan.site_url') + "/user/register?guid=" + guid + "&activate"
@@ -100,29 +100,29 @@ class CustomUserController(UserController):
         Subject: %s
 
         %s 
-        """ % ("dkaarhuskommuneodaa@odaa.dk",str(to),subject,body)
-        
+        """ % (config.get('dk.aarhuskommune.odaa_from'),str(to),subject,body)
+
         try:
             result=self.connection()       
             connectString = """dbname='%s' user='%s' host='%s' password='%s'""" % (result["database"],result["user"],result["host"],result["password"])
             conn = psycopg2.connect(connectString)
             c = conn.cursor()            
             p=request.params["password1"]            
-            password=self._encode('ta122013?',p)
-            now = datetime.datetime.now()                                   
+            password=self._encode(result["password"],p)
+            now = datetime.datetime.now()                                    
             sql="INSERT INTO mailnotifikation VALUES ('" + guid + "','" + str(now) + "','" + request.params["name"] + "','" +request.params["fullname"] +   "','" + request.params["email"] + "','" + password + "','False')"
             c.execute(sql)
-     	    conn.commit()
+	    conn.commit()
 
-            nowlm = now - datetime.timedelta(days=30)
+            nowlm = now - datetime.timedelta(days=int(config.get('dk.aarhuskommune.odaa_days')))
             sNowlm=nowlm.strftime('%Y-%m-%d')            
-            sql="delete from mailnotifikation where _date<'%s'" % (sNowlm);            
+            sql="delete from mailnotifikation where _date<'%s'" % (sNowlm);           
             c.execute(sql)
-	        conn.commit()
+	    conn.commit()
             conn.close()
             smtpObj = smtplib.SMTP('localhost')        
             to=to.split(',')
-            smtpObj.sendmail("dkaarhuskommuneodaa@odaa.dk", to, message)
+            smtpObj.sendmail(config.get('dk.aarhuskommune.odaa_from'), to, message)
         except Exception as e:
             logging.error('Error: unable to send email. %s ',e)
             #sys.exit(1)
@@ -223,5 +223,4 @@ class CustomUserController(UserController):
                             'logged in as "%s" from before') %
                             (data_dict['name'], c.user))
             return render('user/logout_first.html')
-
 
