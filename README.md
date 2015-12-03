@@ -1,4 +1,4 @@
-When a user register an account in CKAN, the user will first resive a activation mail, with a link to activate the account.
+﻿When a user register an account in CKAN, the user will first resive a activation mail, with a link to activate the account.
 
 Setup
 -----------------
