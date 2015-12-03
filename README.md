@@ -2,6 +2,8 @@
 
 Setup
 -----------------
+create database odaa_default;
+
 CREATE TABLE mailNotifikation (_guid VARCHAR PRIMARY KEY UNIQUE NOT NULL, _date date, name VARCHAR, fullname VARCHAR, email VARCHAR, password VARCHAR,registered BOOLEAN);
 
 grant insert on mailnotifikation to ckan_default;
