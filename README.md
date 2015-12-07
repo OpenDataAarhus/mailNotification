@@ -2,13 +2,13 @@
 
 Setup
 -----------------
-
-Make sure your virtualenv is activated.
-
-...$ cd /usr/lib/ckan/default/src/ckan/ckanext
-...$ paster --plugin=ckan create -t ckanext ckanext-mailNotifikation
-...$ cd /usr/lib/ckan/default/src/ckan/ckanext/ckanext-mailNotifikation
-...$ python setup.py develop 
+  
+Make sure your virtualenv is activated.  
+  
+...$ cd /usr/lib/ckan/default/src/ckan/ckanext  
+...$ paster --plugin=ckan create -t ckanext ckanext-mailNotifikation  
+...$ cd /usr/lib/ckan/default/src/ckan/ckanext/ckanext-mailNotifikation  
+...$ python setup.py develop   
 
 ```
 create database odaa_default;  
