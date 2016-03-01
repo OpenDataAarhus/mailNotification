@@ -14,7 +14,6 @@ class MailnotifikationPlugin(plugins.SingletonPlugin):
 
     def before_map(self, map):    
         map.connect('/user/register',controller='ckanext.mailNotifikation.controllers.user:CustomUserController',action='register') 
-        map.connect('/answers',controller='ckanext.mailNotifikation.controllers.answer:AnswersController', action='index')
         return map
   
 	
